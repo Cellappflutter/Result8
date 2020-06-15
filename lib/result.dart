@@ -17,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text("result"),
+        title: Text("RESULT"),
         backgroundColor: Color.fromRGBO(9, 112, 184, 1),
       ),
       body: SingleChildScrollView(
@@ -132,6 +132,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             DataCell(Text(e.gpa.toString()))
                           ]))
                       .toList()),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RichText(
+                        text: TextSpan(text: "Average GPA: ", style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black) ,children: <TextSpan>[
+                          TextSpan(
+                              text:
+                                  " ${widget.student.avggpa}",
+                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
+                        ]),
+                    ),
+                      ),
             ],
           ),
         ),
