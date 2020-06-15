@@ -22,8 +22,7 @@ class Student {
 
   factory Student.fromJson(Map<String, dynamic> data) {
     
-    print("namellllllllllll");
-    print(data["first_name"]);
+   
     
     return Student(
         firstname: data["first_name"],
@@ -39,7 +38,7 @@ class Student {
         dob_day: data["dob_day"],
         dob_year: data["dob_year"],
         dob_mon: data["dob_month"],
-        school_name: data["school_name"],
+        school_name: data["school"],
         reg_id: data["reg_id"]
         );
   }

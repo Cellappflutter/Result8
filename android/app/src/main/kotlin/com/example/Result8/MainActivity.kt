@@ -1,4 +1,4 @@
-package com.example.Result8
+package com.smartpalika.bleresults
 
 import io.flutter.embedding.android.FlutterActivity
 
