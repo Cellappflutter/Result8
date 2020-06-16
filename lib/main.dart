@@ -1,9 +1,22 @@
+import 'package:Result8/bloc/network_bloc.dart';
 import 'package:Result8/homepage.dart';
 import 'package:Result8/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp( MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (BuildContext context) => NetworkBloc(),
+      ),
+      
+    ],
+    child: MyApp(),
+  )
+  );
 }
 
 class MyApp extends StatelessWidget {
