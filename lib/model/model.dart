@@ -60,7 +60,7 @@ final dynamic avggpa;
 
 class Udata {
   final dynamic  gpa;
-  final String credit,name, lable, grade;
+  final dynamic credit,name, lable, grade;
 
   Udata({
     this.credit,
@@ -74,10 +74,10 @@ class Udata {
     print("udata ko ho");
     print(data);
     return Udata(
-        credit: data["credit"] as String,
+        credit: data["credit"] ,
         gpa: data["gpa"] ,
-        name: data["name"] as String,
-        lable: data["label"] as String,
-        grade: data["grade"] as String);
+        name: data["name"] ,
+        lable: data["label"] ,
+        grade: data["grade"] );
   }
 }

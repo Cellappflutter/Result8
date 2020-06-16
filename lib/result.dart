@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: TextSpan(text: "Name: ", style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black),children: <TextSpan>[
                         TextSpan(
                             text:
-                                "${widget.student.student.firstname} ${widget.student.student.lastname}",
+                                "${widget.student.student.firstname.toString()} ${widget.student.student.lastname.toString()}",
                             style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
                       ]),
                     ),
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: TextSpan(text: "Symbol No.: ", style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black) ,children: <TextSpan>[
                         TextSpan(
                             text:
-                                "${widget.student.student.symbol_no}",
+                                "${widget.student.student.symbol_no.toString()}",
                             style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
                       ]),
                     ),
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: TextSpan(text: "School Name: ",style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black) , children: <TextSpan>[
                         TextSpan(
                             text:
-                                " ${widget.student.student.school_name}",
+                                " ${widget.student.student.school_name.toString()}",
                             style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
                       ]),
                     ),
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: TextSpan(text: "School ID.: ",style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black) , children: <TextSpan>[
                         TextSpan(
                             text:
-                                " ${widget.student.student.school_id}",
+                                " ${widget.student.student.school_id.toString()}",
                             style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
                       ]),
                     ),
@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: TextSpan(text: "Year: ", style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black) ,children: <TextSpan>[
                         TextSpan(
                             text:
-                                " ${widget.student.student.year}",
+                                " ${widget.student.student.year.toString()}",
                             style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
                       ]),
                     ),
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       text: TextSpan(text: "Regd No.: ", style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black) ,children: <TextSpan>[
                         TextSpan(
                             text:
-                                " ${widget.student.student.reg_id}",
+                                " ${widget.student.student.reg_id.toString()}",
                             style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
                       ]),
                     ),
@@ -137,9 +137,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                   rows: widget.student.udata
                       .map((e) => DataRow(cells: [
-                            DataCell(Text(e.name)),
-                            DataCell(Text(e.credit)),
-                            DataCell(Text(e.grade)),
+                            DataCell(Text(e.name.toString())),
+                            DataCell(Text(e.credit.toString())),
+                            DataCell(Text(e.grade.toString())),
                             DataCell(Text(e.gpa.toString()))
                           ]))
                       .toList()),
@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         text: TextSpan(text: "Average GPA: ", style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black) ,children: <TextSpan>[
                           TextSpan(
                               text:
-                                  " ${widget.student.avggpa}",
+                                  " ${widget.student.avggpa.toString()}",
                               style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
                         ]),
                     ),
