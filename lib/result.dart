@@ -1,3 +1,4 @@
+import 'package:Result8/homepage.dart';
 import 'package:Result8/model/model.dart';
 import 'package:flutter/material.dart';
 
@@ -15,14 +16,14 @@ class _MyHomePageState extends State<MyHomePage> {
     print(widget.student.udata.runtimeType);
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("RESULT"),
+        
+        title: Text("RESULT",textAlign: TextAlign.center,),
+        centerTitle: true,
         backgroundColor: Color.fromRGBO(9, 112, 184, 1),
       ),
       body: SingleChildScrollView(
         child: Container(
-          //height: MediaQuery.of(context).size.height,
+         
           alignment: Alignment.topCenter,
           child: Column(
             children: <Widget>[
@@ -161,9 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromRGBO(9, 112, 184, 1),
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
         },
-        tooltip: 'Increment',
+        tooltip: 'home',
         child: Icon(Icons.home,),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

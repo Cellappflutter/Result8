@@ -141,11 +141,7 @@ class _HomePageState extends State<HomePage> {
                                 ? "2076-05-06 use this as reference"
                                 : null;
                           }),
-                          // onChanged: (val) {
-                          //   setState(() {
-                          //     dob = val;
-                          //   });
-                          // },
+                         
                         ),
                       ],
                     ),
@@ -175,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                               if (u != null) {
                                 symbol_number.clear();
                                 dob.clear();
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
