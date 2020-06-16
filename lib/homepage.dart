@@ -8,6 +8,7 @@ import 'package:Result8/result.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sms/sms.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final SmsSender sender = new SmsSender();
+  final SmsReceiver receiver = new SmsReceiver();
   final _formkey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String symbol_number = "";
@@ -49,12 +52,12 @@ class _HomePageState extends State<HomePage> {
         if (state is NetworkInitial) {
           print("soansdfasd fasd ");
           setState(() {
-            show = true;
+            show = false;
           });
         } else if (state is NetworkConected) {
           print("daasdfasdfasdfasdfasd");
           setState(() {
-            show = false;
+            show = true;
           });
         }
       },
@@ -144,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(height: 25.0),
-                  RaisedButton(
+                  show ? RaisedButton(
                       elevation: 12.0,
                       color: Color.fromRGBO(52, 152, 249, 1),
                       // splashColor: Colors.blue[50],
@@ -184,10 +187,9 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
                         }
-                      }),
-                  SizedBox(height: 25.0),
-                  show
-                      ? RaisedButton(
+                      }):
+                  
+                   RaisedButton(
                           elevation: 12.0,
                           color: Color.fromRGBO(52, 152, 249, 1),
                           // splashColor: Colors.blue[50],
@@ -201,8 +203,12 @@ class _HomePageState extends State<HomePage> {
                             "Message".toUpperCase(),
                             style: TextStyle(fontSize: 18.0),
                           ),
-                          onPressed: () async {})
-                      : Container(),
+                          onPressed: () async {
+                            if (_formkey.currentState.validate()) {
+                            _sendingSMS("9841048006", symbol_number);
+                            }
+                          })
+                      
                 ],
               ),
             ),
@@ -210,5 +216,33 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+   Future _sendingSMS(String reception, String msg) async {
+    SmsMessage message = SmsMessage(reception, msg);
+    message.onStateChanged.listen((event) {
+      if (event == SmsMessageState.Sent) {
+        print("SMS Sent!");
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+            backgroundColor: Color.fromRGBO(0, 113, 188, 0.9),
+            content: Text("SMS Sent !")));
+      } else if (event == SmsMessageState.Sending) {
+        print("SMS Sending...");
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+            backgroundColor: Color.fromRGBO(0, 113, 188, 0.9),
+            content: Text("SMS Sending...")));
+      } else if (event == SmsMessageState.Delivered) {
+        print("SMS is delivered");
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+            backgroundColor: Color.fromRGBO(0, 113, 188, 0.9),
+            content: Text("SMS Delivered !")));
+      }
+    });
+    try {
+      sender.sendSms(message);
+    } catch (e) {
+      print(e);
+    }
+    receiver.onSmsReceived.listen((SmsMessage message) => print(message.body));
   }
 }
