@@ -53,6 +53,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black))
                       ]),
                     ),
+                    
+                   
+                  ],
+                ),
+              ),
+               Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                   
                     RichText(
                       text: TextSpan(text: "Symbol No.: ", style: TextStyle(fontStyle: FontStyle.italic,color: Colors.black) ,children: <TextSpan>[
                         TextSpan(
