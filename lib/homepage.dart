@@ -1,5 +1,3 @@
-// import 'package:Result8/api/api.dart';
-
 import 'dart:async';
 
 import 'package:Result8/api/api.dart';
@@ -20,29 +18,36 @@ class _HomePageState extends State<HomePage> {
   final SmsReceiver receiver = new SmsReceiver();
   final _formkey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String symbol_number = "";
-  String dob = "";
+  final symbol_number = TextEditingController();
+  final dob = TextEditingController();
+
   bool show = false;
   var _connectionStatus = "unknown";
   Connectivity connectivity;
   StreamSubscription<ConnectivityResult> subscription;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    symbol_number.clear();
+    dob.clear();
     connectivity = new Connectivity();
     subscription =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      print(result);
       if (result == ConnectivityResult.mobile ||
           result == ConnectivityResult.wifi) {
-        print(result);
         BlocProvider.of<NetworkBloc>(context).add(Connected());
       } else if (result == ConnectivityResult.none) {
-        print(result);
         BlocProvider.of<NetworkBloc>(context)..add(Disconnected());
       }
     });
+  }
+
+  @override
+  void dispose() {
+    dob.dispose();
+    symbol_number.dispose();
+    subscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -50,12 +55,10 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<NetworkBloc, NetworkState>(
       listener: (context, state) {
         if (state is NetworkInitial) {
-          print("soansdfasd fasd ");
           setState(() {
             show = false;
           });
         } else if (state is NetworkConected) {
-          print("daasdfasdfasdfasdfasd");
           setState(() {
             show = true;
           });
@@ -85,8 +88,8 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          controller: symbol_number,
                           textAlign: TextAlign.center,
-                          // keyboardType: TextInputType.\number,
                           decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
@@ -106,14 +109,15 @@ class _HomePageState extends State<HomePage> {
                           validator: ((val) {
                             return val.isEmpty ? "Enter Symbol Number" : null;
                           }),
-                          onChanged: (val) {
-                            setState(() {
-                              symbol_number = val;
-                            });
-                          },
+                          // onChanged: (val) {
+                          //   setState(() {
+                          //     symbol_number = val;
+                          //   });
+                          // },
                         ),
                         SizedBox(height: 10),
                         TextFormField(
+                          controller: dob,
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
@@ -137,59 +141,55 @@ class _HomePageState extends State<HomePage> {
                                 ? "2076-05-06 use this as reference"
                                 : null;
                           }),
-                          onChanged: (val) {
-                            setState(() {
-                              dob = val;
-                            });
-                          },
+                         
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 25.0),
-                  show ? RaisedButton(
-                      elevation: 12.0,
-                      color: Color.fromRGBO(52, 152, 249, 1),
-                      // splashColor: Colors.blue[50],
-                      textColor: Colors.white,
-                      padding:
-                          EdgeInsets.symmetric(vertical: 18, horizontal: 21),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(12.0))),
-                      child: Text(
-                        "Submit".toUpperCase(),
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      onPressed: () async {
-                        if (_formkey.currentState.validate()) {
-                          dynamic u =
-                              await Apiresult().getresult(symbol_number, dob);
-
-                          if (u != null) {
-                            setState(() {
-                              symbol_number = "";
-                              dob = "";
-                            });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        MyHomePage(student: u)));
-                          }
-                          if (u == null) {
-                            _scaffoldKey.currentState.showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(
-                                    "There seems to be an issue with your network or you have entered wrong credentials"),
-                              ),
-                            );
-                          }
-                        }
-                      }):
-                  
-                   RaisedButton(
+                  show
+                      ? RaisedButton(
+                          elevation: 12.0,
+                          color: Color.fromRGBO(52, 152, 249, 1),
+                          // splashColor: Colors.blue[50],
+                          textColor: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 18, horizontal: 21),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0))),
+                          child: Text(
+                            "Submit".toUpperCase(),
+                            style: TextStyle(fontSize: 18.0),
+                          ),
+                          onPressed: () async {
+                            if (_formkey.currentState.validate()) {
+                              dynamic u = await Apiresult()
+                                  .getresult(symbol_number.text, dob.text);
+                              print(symbol_number.text);
+                              print(dob.text);
+                              if (u != null) {
+                                symbol_number.clear();
+                                dob.clear();
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MyHomePage(student: u)));
+                              }
+                              if (u == null) {
+                               
+                                _scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: Text(
+                                        "There seems to be an issue with your network or you have entered wrong credentials"),
+                                  ),
+                                );
+                              }
+                            }
+                          })
+                      : RaisedButton(
                           elevation: 12.0,
                           color: Color.fromRGBO(52, 152, 249, 1),
                           // splashColor: Colors.blue[50],
@@ -205,10 +205,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                           onPressed: () async {
                             if (_formkey.currentState.validate()) {
-                            _sendingSMS("9841048006", symbol_number);
+                              _sendingSMS("9841048006", symbol_number.text);
                             }
                           })
-                      
                 ],
               ),
             ),
@@ -218,7 +217,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-   Future _sendingSMS(String reception, String msg) async {
+  Future _sendingSMS(String reception, String msg) async {
     SmsMessage message = SmsMessage(reception, msg);
     message.onStateChanged.listen((event) {
       if (event == SmsMessageState.Sent) {
