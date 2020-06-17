@@ -163,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromRGBO(9, 112, 184, 1),
         onPressed: () {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Selector()));
+          Navigator.pushNamedAndRemoveUntil(context, 'nagarpalika',ModalRoute.withName('nagarpalika'));
         },
         tooltip: 'home',
         child: Icon(Icons.home,),

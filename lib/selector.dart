@@ -32,21 +32,11 @@ class Selector extends StatelessWidget {
                 children: <Widget>[
                   CellButton(
                     text: "Online बाट थाहपौन",
-                    onpressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                  isshow: true,
-                                ))),
+                    onpressed: () => Navigator.pushNamed(context, 'homepage',arguments: true),
                   ),
                   CellButton(
                     text: "SMS बाट थाहपौन",
-                    onpressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                  isshow: false,
-                                ))),
+                    onpressed: () => Navigator.pushNamed(context, 'homepage',arguments: false),
                   )
                 ],
               ),

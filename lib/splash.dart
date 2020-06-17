@@ -22,18 +22,10 @@ class _SplashScreenState extends State<SplashScreen> {
    
     Timer(
         Duration(seconds: 1),
-        () => Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => Nagarpalika()),
-            (Route<dynamic> route) => false));
+        () => Navigator.pushNamedAndRemoveUntil(context, "nagarpalika", (route) => false));
   }
 
-  // @override
-  // void dispose() {
-  //   //subscription.cancel();
-  //   super.dispose();
-  // }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
