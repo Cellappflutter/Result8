@@ -3,6 +3,7 @@ import 'package:Result8/homepage.dart';
 import 'package:Result8/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:Result8/router.dart'as router;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: router.generatedRoute ,
+      initialRoute: "/",
       title: 'SmartPalika BLE Results',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

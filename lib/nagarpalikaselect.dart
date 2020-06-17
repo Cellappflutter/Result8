@@ -89,8 +89,7 @@ class NagarpalikaState extends State<Nagarpalika> {
             isThreeLine: false,
             leading: Icon(Icons.account_balance,color: Colors.white,size: 25,),
             title: Text("लुम्बिनी सांस्कृतिक नगरपालिका",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.white),),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Selector(id: 1,))),
+            onTap: () => Navigator.pushNamed(context, 'selector',arguments: 1),
           )
       ],
     ),

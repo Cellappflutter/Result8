@@ -167,11 +167,7 @@ class _HomePageState extends State<HomePage> {
                               if (u.status == true) {
                                 symbol_number.clear();
                                 dob.clear();
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            MyHomePage(student: u)));
+                                Navigator.pushNamed(context, 'result',arguments: u);
                               }
                               if (u.status == false) {
                                
@@ -188,7 +184,7 @@ class _HomePageState extends State<HomePage> {
               )
                       : CellButton(text: 'Message', onpressed: ()async {
                             if (_formkey.currentState.validate()) {
-                              _sendingSMS("35001", "rslt <${symbol_number.text}>");
+                              _sendingSMS("35001", "rslt ${symbol_number.text}>");
                             }
                           })
                 ],
