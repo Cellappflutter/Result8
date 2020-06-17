@@ -1,9 +1,10 @@
 import 'package:Result8/homepage.dart';
 import 'package:Result8/model/model.dart';
+import 'package:Result8/selector.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
-  final Akodata student;
+  final Studentdata student;
   MyHomePage({Key key, @required this.student}) : super(key: key);
 
   @override
@@ -162,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromRGBO(9, 112, 184, 1),
         onPressed: () {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Selector()));
         },
         tooltip: 'home',
         child: Icon(Icons.home,),

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:Result8/bloc/network_bloc.dart';
 import 'package:Result8/homepage.dart';
+import 'package:Result8/nagarpalikaselect.dart';
+import 'package:Result8/selector.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,10 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
    
     Timer(
-        Duration(seconds: 4),
+        Duration(seconds: 1),
         () => Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => Nagarpalika()),
             (Route<dynamic> route) => false));
   }
 

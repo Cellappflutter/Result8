@@ -2,13 +2,18 @@ import 'dart:async';
 
 import 'package:Result8/api/api.dart';
 import 'package:Result8/bloc/network_bloc.dart';
+import 'package:Result8/model/model.dart';
 import 'package:Result8/result.dart';
+import 'package:Result8/widgets/button.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sms/sms.dart';
 
 class HomePage extends StatefulWidget {
+  final bool isshow;
+
+  const HomePage({Key key,@required this.isshow}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -21,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   final symbol_number = TextEditingController();
   final dob = TextEditingController();
 
-  bool show = false;
+ // bool show = widget.isshow;
   var _connectionStatus = "unknown";
   Connectivity connectivity;
   StreamSubscription<ConnectivityResult> subscription;
@@ -55,13 +60,15 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<NetworkBloc, NetworkState>(
       listener: (context, state) {
         if (state is NetworkInitial) {
-          setState(() {
-            show = false;
-          });
+         _scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: Text(
+                                        "You have disconnected from the internet go back to use the SMS service"),
+                                  ),
+                                );
         } else if (state is NetworkConected) {
-          setState(() {
-            show = true;
-          });
+          
         }
       },
       child: Scaffold(
@@ -147,28 +154,17 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(height: 25.0),
-                  show
-                      ? RaisedButton(
-                          elevation: 12.0,
-                          color: Color.fromRGBO(52, 152, 249, 1),
-                          // splashColor: Colors.blue[50],
-                          textColor: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 21),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0))),
-                          child: Text(
-                            "Submit".toUpperCase(),
-                            style: TextStyle(fontSize: 18.0),
-                          ),
-                          onPressed: () async {
+                  widget.isshow
+                      ? 
+                      CellButton(
+                text: "Submit",
+                onpressed: ()   async {
                             if (_formkey.currentState.validate()) {
-                              dynamic u = await Apiresult()
+                              Studentdata u = await Apiresult()
                                   .getresult(symbol_number.text, dob.text);
                               print(symbol_number.text);
                               print(dob.text);
-                              if (u != null) {
+                              if (u.status == true) {
                                 symbol_number.clear();
                                 dob.clear();
                                 Navigator.pushReplacement(
@@ -177,35 +173,22 @@ class _HomePageState extends State<HomePage> {
                                         builder: (context) =>
                                             MyHomePage(student: u)));
                               }
-                              if (u == null) {
+                              if (u.status == false) {
                                
                                 _scaffoldKey.currentState.showSnackBar(
                                   SnackBar(
                                     backgroundColor: Colors.red,
                                     content: Text(
-                                        "There seems to be an issue with your network or you have entered wrong credentials"),
+                                        u.message.toString()),
                                   ),
                                 );
                               }
                             }
-                          })
-                      : RaisedButton(
-                          elevation: 12.0,
-                          color: Color.fromRGBO(52, 152, 249, 1),
-                          // splashColor: Colors.blue[50],
-                          textColor: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 21),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0))),
-                          child: Text(
-                            "Message".toUpperCase(),
-                            style: TextStyle(fontSize: 18.0),
-                          ),
-                          onPressed: () async {
+                          },
+              )
+                      : CellButton(text: 'Message', onpressed: ()async {
                             if (_formkey.currentState.validate()) {
-                              _sendingSMS("9841048006", symbol_number.text);
+                              _sendingSMS("35001", "rslt <${symbol_number.text}>");
                             }
                           })
                 ],
