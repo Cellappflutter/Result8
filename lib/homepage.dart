@@ -13,7 +13,7 @@ import 'package:sms/sms.dart';
 class HomePage extends StatefulWidget {
   final bool isshow;
 
-  const HomePage({Key key,@required this.isshow}) : super(key: key);
+  const HomePage({Key key, @required this.isshow}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   final symbol_number = TextEditingController();
   final dob = TextEditingController();
 
- // bool show = widget.isshow;
+  // bool show = widget.isshow;
   var _connectionStatus = "unknown";
   Connectivity connectivity;
   StreamSubscription<ConnectivityResult> subscription;
@@ -60,16 +60,14 @@ class _HomePageState extends State<HomePage> {
     return BlocListener<NetworkBloc, NetworkState>(
       listener: (context, state) {
         if (state is NetworkInitial) {
-         _scaffoldKey.currentState.showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: Colors.red,
-                                    content: Text(
-                                        "You have disconnected from the internet go back to use the SMS service"),
-                                  ),
-                                );
-        } else if (state is NetworkConected) {
-          
-        }
+          _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(
+                  "You have disconnected from the internet go back to use the SMS service"),
+            ),
+          );
+        } else if (state is NetworkConected) {}
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -148,17 +146,25 @@ class _HomePageState extends State<HomePage> {
                                 ? "2076-05-06 use this as reference"
                                 : null;
                           }),
-                         
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 25.0),
-                  widget.isshow
-                      ? 
+                  // widget.isshow
+                      // ? 
                       CellButton(
-                text: "Submit",
-                onpressed: ()   async {
+                          text: 'Message',
+                          onpressed: () async {
+                            if (_formkey.currentState.validate()) {
+                              _sendingSMS(
+                                  "35001", "rslt ${symbol_number.text}");
+                            }
+                          }),
+                          SizedBox(height: 15.0,),
+                      CellButton(
+                          text: "Submit",
+                          onpressed: () async {
                             if (_formkey.currentState.validate()) {
                               Studentdata u = await Apiresult()
                                   .getresult(symbol_number.text, dob.text);
@@ -167,26 +173,23 @@ class _HomePageState extends State<HomePage> {
                               if (u.status == true) {
                                 symbol_number.clear();
                                 dob.clear();
-                                Navigator.pushNamed(context, 'result',arguments: u);
+                                Navigator.pushNamed(context, 'result',
+                                    arguments: u);
                               }
                               if (u.status == false) {
-                               
                                 _scaffoldKey.currentState.showSnackBar(
                                   SnackBar(
                                     backgroundColor: Colors.red,
-                                    content: Text(
-                                        u.message.toString()),
+                                    content: Text(u.message.toString()),
                                   ),
                                 );
                               }
                             }
                           },
-              )
-                      : CellButton(text: 'Message', onpressed: ()async {
-                            if (_formkey.currentState.validate()) {
-                              _sendingSMS("35001", "rslt ${symbol_number.text}");
-                            }
-                          })
+                        ),
+                        SizedBox(height: 15.0),
+                      // : 
+                      
                 ],
               ),
             ),
@@ -195,8 +198,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  
 
   Future _sendingSMS(String reception, String msg) async {
     SmsMessage message = SmsMessage(reception, msg);
