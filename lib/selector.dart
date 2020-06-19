@@ -27,19 +27,26 @@ class Selector extends StatelessWidget {
                             image: DecorationImage(
                                 image: AssetImage("assets/Icon.png")),
                           ))),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  CellButton(
-                    text: "Online बाट थाहपौन",
-                    onpressed: () => Navigator.pushNamed(context, 'homepage',arguments: true),
-                  ),
-                  CellButton(
-                    text: "SMS बाट थाहपौन",
-                    onpressed: () => Navigator.pushNamed(context, 'homepage',arguments: false),
-                  )
-                ],
+                          SizedBox(width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CellButton(
+                  text: "Check via Sms",
+                  onpressed: () => Navigator.pushNamed(context, 'homepage',arguments: false),
+                ),
+                              ),
               ),
+              SizedBox(
+                width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CellButton(
+                  text: "Check Online",
+                  onpressed: () => Navigator.pushNamed(context, 'homepage',arguments: true),
+                ),
+                              ),
+              ),
+              
             ],
           ),
         ),

@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
    
     Timer(
-        Duration(seconds: 1),
+        Duration(seconds: 3),
         () => Navigator.pushNamedAndRemoveUntil(context, "nagarpalika", (route) => false));
   }
 
