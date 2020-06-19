@@ -196,6 +196,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  
+
   Future _sendingSMS(String reception, String msg) async {
     SmsMessage message = SmsMessage(reception, msg);
     message.onStateChanged.listen((event) {
