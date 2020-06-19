@@ -184,7 +184,7 @@ class _HomePageState extends State<HomePage> {
               )
                       : CellButton(text: 'Message', onpressed: ()async {
                             if (_formkey.currentState.validate()) {
-                              _sendingSMS("35001", "rslt ${symbol_number.text}>");
+                              _sendingSMS("35001", "rslt ${symbol_number.text}");
                             }
                           })
                 ],
